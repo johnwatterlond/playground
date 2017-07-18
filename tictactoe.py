@@ -8,15 +8,25 @@ Throughout this script, the variable `board` is a list containing the rows of a 
 import copy
 import random
 import itertools
+import os
+
+
+def clear():
+    """Clear terminal screen."""
+    os.system('clear')
 
 
 def cols(board):
-    """Return columns of board as a list."""
+    """
+    Return columns of board as a list.
+    """
     return [[row[i] for row in board] for i in range(3)]
 
 
 def diags(board):
-    """Return diagonals of board as a list."""
+    """
+    Return diagonals of board as a list.
+    """
     maindiag = [board[i][i] for i in range(3)]
     oppdiag = [board[i][2-i] for i in range(3)]
     return [maindiag, oppdiag]
@@ -90,14 +100,25 @@ def check_win(board, p):
 
 
 def print_board(board):
-    """Prints a pretty version of board."""
-    board_string = '{0[0]:^3}|{0[1]:^3}|{0[2]:^3}\n-----------\n{1[0]:^3}|{1[1]:^3}|{1[2]:^3}\n-----------\n{2[0]:^3}|{2[1]:^3}|{2[2]:^3}'
+    """
+    Prints a pretty version of board.
+    """
+    clear()
+    board_string = (
+    '{0[0]:^3}|{0[1]:^3}|{0[2]:^3}'
+    '\n-----------\n'
+    '{1[0]:^3}|{1[1]:^3}|{1[2]:^3}'
+    '\n-----------\n'
+    '{2[0]:^3}|{2[1]:^3}|{2[2]:^3}'
+    )
+    print('Current board:')
     print(board_string.format(*board))
 
 
 def computer_move():
     """
     Assumes that there are global variables `comp` and `player`.
+    Assumes there is a variable `board`.
 
     Check if comp has any winning moves and picks one.
     Check if player has winning moves and picks one.
@@ -116,15 +137,12 @@ def computer_move():
         row, col = random.choice(get_empty_spots(board))
         update(board, row, col, comp)
 
-    print('Current Board:')
-    print_board(board)
-    print('\n')
 
-
-def player_move():
+def player_move(player):
     """
-    Assumes that there is a global variable `player`.
+    Assumes there is a variable `board`.
     """
+    print('{} pic a move.'.format(player))
     row = int(input('Pick a row: ')) - 1
     col = int(input('Pick a column: ')) - 1
 
@@ -133,29 +151,57 @@ def player_move():
         print('\n')
     else:
         print('\nSpot not empty. Try again.')
-        player_move()
-
-    print('Current Board:')
-    print_board(board)
-    print('\n')
+        player_move(player)
 
 
-def game():
+def game_vs_comp():
     while True:
+        print_board(board)
         computer_move()
+
         if check_win(board, comp):
+            print_board(board)
             print('Computer wins!')
             break
         if not get_empty_spots(board):
+            print_board(board)
             print("It's a draw...")
             break
-        player_move()
+
+        print_board(board)
+        player_move(player)
+
         if check_win(board, player):
+            print_board(board)
             print('Player wins!')
+            break
+
+
+def two_player_game():
+    while True:
+        print_board(board)
+        player_move(p1)
+
+        if check_win(board, p1):
+            print_board(board)
+            print('{} wins!'.format(p1))
+            break
+        if not get_empty_spots(board):
+            print_board(board)
+            print("It's a draw...")
+            break
+
+        print_board(board)
+        player_move(p2)
+
+        if check_win(board, p2):
+            print_board(board)
+            print('{} wins!'.format(p2))
             break
 
 
 if __name__ == '__main__':
     board = [['-' for i in range(3)] for j in range(3)]
-    comp, player = 'x', 'o'
-    game()
+#    comp, player = 'x', 'o'
+    p1, p2 = 'x', 'o'
+    two_player_game()
