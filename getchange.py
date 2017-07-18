@@ -1,4 +1,6 @@
-
+"""
+Module to calculate change.
+"""
 
 import collections
 
