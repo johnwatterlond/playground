@@ -7,7 +7,7 @@ import collections
 
 coin_names = ['quarters', 'dimes', 'nickels', 'pennies']
 coin_values = [25, 10, 5, 1]
-coins = collections.OrderedDict(zip(coin_names, coin_values)))
+coins = collections.OrderedDict(zip(coin_names, coin_values))
 
 dollar_names = ['twenties', 'tens', 'fives', 'ones']
 dollar_values = [20, 10, 5, 1]
@@ -51,7 +51,7 @@ def get_dollars(change):
         }
     for dollar in dollars:
         (dollar_count, new_change) = divmod(change, dollars[dollar])
-        dollar_counts[coin] = dollar_count
+        dollar_counts[dollar] = dollar_count
         change = new_change
     return dollar_counts
 
@@ -106,8 +106,8 @@ def calc_and_print_change(cost, given):
 
 
 def main():
-    cost = input('How much does customer owe? ')
-    given = input('How much did customer give? ')
+    cost = float(input('How much does customer owe? '))
+    given = float(input('How much did customer give? '))
     calc_and_print_change(cost, given)
 
 
