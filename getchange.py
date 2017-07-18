@@ -37,11 +37,8 @@ def get_coins(change):
 
 def get_dollars(change):
     """
-    Return a dictionary of coin_name:coin_count needed to give
-    change for coins.
-
-    The variable change should be an integer.
-    To get coins for .35 dollars, call get_coins(35).
+    Return a dictionary of dollar_name:dollar_count needed to give
+    change for dollars.
     """
     dollar_counts = {
         'twenties':0,
