@@ -178,6 +178,12 @@ def game_vs_comp():
 
 
 def two_player_game():
+    """
+    Two player game.
+
+    Assumes there are global variables p1 and p2 which are used
+    as characters for the board.
+    """
     while True:
         print_board(board)
         player_move(p1)
