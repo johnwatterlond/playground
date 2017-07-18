@@ -25,11 +25,11 @@ class Hangman:
 
     Attributes:
         secret_word: The word used for the game of hangman.
-        board_list: List representing current board. Missing letters
-                        are indicated by '-'.
+        board_list: List representing current board.
+                    Missing letters are indicated by '-'.
         guesses: List of guesses made.
         guesses_left: Number of guesses left. Only changes if an
-                        incorrect guess is made.
+                      incorrect guess is made.
         last_guess: String holding the last guess made.
         message: String used to print a message to the screen.
     """
@@ -100,7 +100,8 @@ class Hangman:
         Take a turn.
 
         Prompt user for letter. Update board and letters that have
-        already been tried.  Also update the number of guesses left.
+        already been tried.  Also update the number of guesses
+        and the last guess.
 
         If game is over, prints the appropriate message.
         """
