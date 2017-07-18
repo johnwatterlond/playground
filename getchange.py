@@ -9,12 +9,21 @@ coin_vals = collections.OrderedDict(coin_tuples)
 
 def get_coins(change):
     """
-    Return a dictionary of coin_name:coin_count needed to give change for coins.
+    Return a dictionary of coin_name:coin_count needed to give
+    change for coins.
+
+    The variable change should be an integer.
+    To get coins for .35 dollars, call get_coins(35).
     """
-    coin_counts = {'quarters':0, 'dimes':0, 'nickels':0, 'pennies':0}
+    coin_counts = {
+        'quarters':0,
+        'dimes':0,
+        'nickels':0,
+        'pennies':0
+        }
     for coin in coin_vals:
-        (num, new_change) = divmod(change, coin_vals[coin])
-        coin_counts[coin] = num
+        (coin_count, new_change) = divmod(change, coin_vals[coin])
+        coin_counts[coin] = coin_count
         change = new_change
     return coin_counts
 
@@ -27,6 +36,11 @@ def find_change(cost, given):
     return divmod(raw_change, 100)
 
 
+def print_coin_change(coin_dict):
+    change_str = 'Quarters: {quarters}\nDimes: {dimes}\nNickels: {nickels}\nPennies: {pennies}'
+    print(change_str.format(**coin_dict))
+
+
 def calc_and_print_change(cost, given):
     dollars, cents = find_change(cost, given)
     coin_count_dict = get_coins(cents)
@@ -34,9 +48,6 @@ def calc_and_print_change(cost, given):
     print_coin_change(coin_count_dict)
 
 
-def print_coin_change(coin_dict):
-    change_str = 'Quarters: {quarters}\nDimes: {dimes}\nNickels: {nickels}\nPennies: {pennies}'
-    print(change_str.format(**coin_dict))
 
 
 
