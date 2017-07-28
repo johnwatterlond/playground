@@ -3,13 +3,13 @@ import math
 import random
 
 
-bob = turtle.Turtle()
+t = turtle.Turtle()
 ts = turtle.getscreen()
 ts.clear()
 
 
 ts.screensize(5000,5000)
-bob.speed(0)
+t.speed(0)
 ts.delay(0)
 
 
@@ -46,9 +46,11 @@ class my_turtle(turtle.Turtle):
         """
         Move turtle to coordinates (x, y) without drawing any lines.
         """
+        self.hideturtle()
         self.penup()
         self.setposition(x, y)
         self.pendown()
+        self.showturtle()
 
     def go_home(self):
         """
