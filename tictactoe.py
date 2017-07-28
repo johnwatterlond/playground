@@ -208,6 +208,7 @@ def two_player_game():
 
 if __name__ == '__main__':
     board = [['-' for i in range(3)] for j in range(3)]
-#    comp, player = 'x', 'o'
-    p1, p2 = 'x', 'o'
-    two_player_game()
+    comp, player = 'x', 'o'
+#    p1, p2 = 'x', 'o'
+#    two_player_game()
+    game_vs_comp()
