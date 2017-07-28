@@ -29,15 +29,18 @@ class Point:
 
 
 class my_turtle(turtle.Turtle):
+    def __init__(self, home=Point(0, 0)):
+        self.home = home
+        super().__init__()
+
+    def pos(self):
+        return Point(*self.position())
+
     def is_home(self, epsilon=.001):
         """
-        Check if turtle is within epsilon of home.
-
-        home is defined as (0, 0).
+        Check if turtle is within epsilon its home.
         """
-        home = Point(0, 0)
-        t_pos = Point(*self.pos())
-        return t_pos.distance(home) < epsilon
+        return self.pos().distance(self.home) < epsilon
 
     def goto(self, x, y):
         """
@@ -60,8 +63,8 @@ class my_turtle(turtle.Turtle):
         Turtle draws a regular polygon with side lengths side_length.
         """
         for i in range(num_sides):
-            self.fd(side_length)
-            self.lt(360/num_sides)
+            self.forward(side_length)
+            self.left(360 / num_sides)
 
     def draw_square(self, side_length):
         """
@@ -72,7 +75,7 @@ class my_turtle(turtle.Turtle):
     def draw_box(self, boxsize):
         """
         Turtle draws box centered at (0,0) with side length
-        boxsize*2 and then return home.
+        boxsize * 2 and then return home.
         """
         self.goto(-boxsize, -boxsize)
         self.draw_square(boxsize * 2)
