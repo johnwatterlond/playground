@@ -39,13 +39,21 @@ class my_turtle(turtle.Turtle):
         t_pos = Point(*self.pos())
         return t_pos.distance(home) < epsilon
 
+    def goto(self, x, y):
+        """
+        Move turtle to coordinates (x, y) without drawing any lines.
+        """
+        self.penup()
+        self.setposition(x, y)
+        self.pendown()
+
     def go_home(self):
         """
-        Return turtle back home (without drawing lines).
+        Return turtle back home without drawing lines.
 
         home is defined as (0, 0).
         """
-        self.setpos(0, 0)
+        self.goto(0, 0)
 
     def draw_polygon(self, side_length, num_sides):
         """
@@ -63,16 +71,12 @@ class my_turtle(turtle.Turtle):
 
     def draw_box(self, boxsize):
         """
-        Draw box centered at (0,0) with side length
-        boxsize*2.
-        Returns turtle back home afterwards.
+        Turtle draws box centered at (0,0) with side length
+        boxsize*2 and then return home.
         """
-        self.penup()
-        self.goto(-boxsize,-boxsize)
-        self.pendown()
+        self.goto(-boxsize, -boxsize)
         self.draw_square(boxsize * 2)
         self.go_home()
-
 
 
 def random_move(t, d=(10, 10), a=(-180, 180), num_steps=1000):
