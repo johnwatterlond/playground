@@ -27,6 +27,12 @@ class Point:
         dy = other.y - self.y
         return math.sqrt((dx)**2 + (dy)**2)
 
+    def is_in_box(self, boxsize):
+        """
+        Check if point is in box with side length boxsize.
+        """
+        return abs(self.x) < boxsize and abs(self.y) < boxsize
+
 
 class my_turtle(turtle.Turtle):
     def __init__(self, home=Point(0, 0)):
@@ -60,6 +66,18 @@ class my_turtle(turtle.Turtle):
         """
         self.goto(0, 0)
 
+    def silent_forward(self, distance):
+        """
+        Hide turtle and move forward by distance without drawing
+        any lines.
+
+        This method is meant to be followed by goto() and as such
+        leaves turtle hidden and pen up.
+        """
+        self.hideturtle()
+        self.penup()
+        self.forward(distance)
+
     def draw_polygon(self, side_length, num_sides):
         """
         Turtle draws a regular polygon with side lengths side_length.
@@ -83,6 +101,24 @@ class my_turtle(turtle.Turtle):
         self.draw_square(boxsize * 2)
         self.go_home()
 
+    def is_move_in_box(self, distance, boxsize):
+        """
+        Return True if going forward by distance will keep turtle
+        in box with side length boxsize.
+        """
+        current_position = self.position()
+        self.silent_forward(distance)
+        proposed_position = Point(*self.position())
+        self.goto(*current_position)
+        return proposed_position.is_in_box(boxsize)
+
+
+
+
+
+
+
+
 
 def random_move(t, d=(10, 10), a=(-180, 180), num_steps=1000):
     """
@@ -100,41 +136,8 @@ def random_move(t, d=(10, 10), a=(-180, 180), num_steps=1000):
 
 
 
-# TODO:
-# want to make these two functions better...
-# get wriggle working, think it is not working because
-# check_forward_and_move does two things! so fix that. so for
-# example, instead of wriggling the turtle turns around.
 
 
-def check_forward_and_move(t, distance, boxsize):
-    """
-    If moving turtle t forward by distance distance keeps
-    t in the box, moves t forward by distance.  Else turns around.
-    """
-    old_pos = t.pos()
-
-    t.penup()
-    t.hideturtle()
-    t.forward(distance)
-
-    out_of_bounds = check_out_of_bounds(t, boxsize)
-
-    t.goto(old_pos)
-    t.pendown()
-    t.showturtle()
-
-    if out_of_bounds == False:
-        t.forward(distance)
-    else:
-        t.right(180)
-
-
-def check_out_of_bounds(t, boxsize):
-    if abs(t.xcor()) > boxsize or abs(t.ycor()) > boxsize:
-        return True
-    else:
-        return False
 
 
 def random_move_boxed(t, d, a, steps, boxsize):
@@ -153,18 +156,6 @@ def wriggle(t, distance, boxsize):
         t.right(distance)
         check_forward_and_move(t, distance, boxsize)
 
-
-def draw_box(t, boxsize):
-    """
-    Draw box centered at (0,0) with side length
-    boxsize*2.
-    Returns t=turtle back home afterwards.
-    """
-    t.penup()
-    t.goto(-boxsize,-boxsize)
-    t.pendown()
-    draw_square(t, boxsize * 2)
-    return_home(t)
 
 
 
