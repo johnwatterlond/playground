@@ -41,6 +41,14 @@ class Point:
         """
         return abs(self.x) < boxsize and abs(self.y) < boxsize
 
+    def is_in_circle(self, radius):
+        """
+        Check if point is in circle of radius radius.
+
+        In this context, a circle is a circle centered at (0, 0).
+        """
+        return self.distance(Point(0,0)) < radius
+
 
 class TurtleWalk(turtle.Turtle):
     def __init__(self, home=Point(0, 0)):
@@ -175,6 +183,65 @@ class TurtleWalk(turtle.Turtle):
             else:
                 self.left(180)
             step = step + 1
+
+    def draw_circle(self, radius):
+        self.goto(0, -radius)
+        self.circle(radius)
+        self.go_home()
+
+    def is_move_in_circle(self, distance, radius):
+        """
+        Return True if by going forward by distance, turtle is in
+        the circle of radius radius.
+        """
+
+        # TODO:
+        # DRY. this is basically verbatim copy of
+        # is_move_in_box.
+        current_position = self.position()
+        self.silent_forward(distance)
+        proposed_position = Point(*self.position())
+        self.goto(*current_position)
+        return proposed_position.is_in_circle(radius)
+
+
+    def random_walk_in_circle(self, step_size, turn_angle, num_steps, radius):
+        """
+        Turtle goes for a random walk inside a circle of radius
+        radius for num_steps steps.
+
+        If a step causes turtle to leave circle, instead of taking
+        that step turtle turns around.
+
+
+        step_size = (min_step_size, max_step_size)
+        turn_angle = (min_turn_angle, max_turn_angle)
+
+        Each step has a random angle theta and random step length
+        dist such that:
+        min_turn_angle <= theta <= max_turn_angle
+        and
+        min_step_size <= dist <= max_step_size
+        """
+        self.draw_circle(radius)
+        step = 0
+        while step < num_steps:
+            self.left(random.uniform(*turn_angle))
+            distance = random.uniform(*step_size)
+            if self.is_move_in_circle(distance, radius):
+                self.forward(distance)
+            else:
+                self.left(180)
+            step = step + 1
+
+
+# TODO:
+# make names for box and draw_box similar to circle/draw_circle...
+def draw_circle(t, radius):
+    t.goto(0, -radius)
+    t.circle(radius)
+    t.go_home()
+
 
 
 
