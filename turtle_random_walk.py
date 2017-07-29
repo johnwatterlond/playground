@@ -1,18 +1,26 @@
+"""
+Module used to simulate random walks with turtle geometry.
+
+
+This module was created while reading parts of `Turtle Geometry` by
+Harold Abelson and Andrea diSessa.
+
+
+Make sure to set the turtle speed to zero and the screen delay to
+zero.
+"""
+
 import turtle
 import math
 import random
 
 
-t = turtle.Turtle()
-ts = turtle.getscreen()
-ts.clear()
 
-
-ts.screensize(5000,5000)
-t.speed(0)
-ts.delay(0)
-
-
+#TODO:
+# make my turtle class work better with Point class.
+# when calling like t.pos() it returns a Point object.
+# I should also be able to do something like t.goto(Point)
+# i.e. pass a Point object to t.goto().
 
 class Point:
     def __init__(self, x, y):
@@ -29,12 +37,12 @@ class Point:
 
     def is_in_box(self, boxsize):
         """
-        Check if point is in box with side length boxsize.
+        Check if point is in box of size boxsize.
         """
         return abs(self.x) < boxsize and abs(self.y) < boxsize
 
 
-class my_turtle(turtle.Turtle):
+class TurtleWalk(turtle.Turtle):
     def __init__(self, home=Point(0, 0)):
         self.home = home
         super().__init__()
@@ -61,8 +69,6 @@ class my_turtle(turtle.Turtle):
     def go_home(self):
         """
         Return turtle back home without drawing lines.
-
-        home is defined as (0, 0).
         """
         self.goto(0, 0)
 
@@ -80,7 +86,8 @@ class my_turtle(turtle.Turtle):
 
     def draw_polygon(self, side_length, num_sides):
         """
-        Turtle draws a regular polygon with side lengths side_length.
+        Turtle draws a regular polygon with side lengths
+        side_length.
         """
         for i in range(num_sides):
             self.forward(side_length)
@@ -94,8 +101,11 @@ class my_turtle(turtle.Turtle):
 
     def draw_box(self, boxsize):
         """
-        Turtle draws box centered at (0,0) with side length
-        boxsize * 2 and then return home.
+        Turtle draws a box of size boxsize.
+
+        A box is defined as a square centered at (0, 0).
+        The size of a box is defined as the (shortest) distance
+        from the center of the box to any of its sides.
         """
         self.goto(-boxsize, -boxsize)
         self.draw_square(boxsize * 2)
@@ -103,54 +113,62 @@ class my_turtle(turtle.Turtle):
 
     def is_move_in_box(self, distance, boxsize):
         """
-        Return True if going forward by distance will keep turtle
-        in box with side length boxsize.
+        Return True if by going forward by distance, turtle is in
+        the box of size boxsize.
         """
+
+        # TODO:
+        # current_position is a tuple while proposed_position is
+        # a Point().  This could be confusing when reading later.
+        # Fix this issue.
         current_position = self.position()
         self.silent_forward(distance)
         proposed_position = Point(*self.position())
         self.goto(*current_position)
         return proposed_position.is_in_box(boxsize)
 
-    def random_walk(self, step_size, angle, num_steps):
+    def random_walk(self, step_size, turn_angle, num_steps):
         """
         Turtle goes for a random walk for num_steps steps.
 
+
         step_size = (min_step_size, max_step_size)
-        angle = (min_angle, max_angle)
+        turn_angle = (min_turn_angle, max_turn_angle)
 
         Each step has a random angle theta and random step length
         dist such that:
-        min_angle <= theta <= max_angle
+        min_turn_angle <= theta <= max_turn_angle
         and
         min_step_size <= dist <= max_step_size
         """
         step = 0
         while step < num_steps:
-            self.left(random.uniform(*angle))
+            self.left(random.uniform(*turn_angle))
             self.forward(random.uniform(*step_size))
             step = step + 1
 
-
-    def random_walk_boxed(self, step_size, angle, num_steps, boxsize):
+    def random_walk_in_box(self, step_size, turn_angle, num_steps, boxsize):
         """
-        Turtle goes for a random walk inside box with side length
-        boxsize for num_steps steps. If turtle hits wall with next
-        step, it turns around.
+        Turtle goes for a random walk inside a box of size boxsize
+        for num_steps steps.
+
+        If a step causes turtle to leave box, instead of taking
+        that step turtle turns around.
+
 
         step_size = (min_step_size, max_step_size)
-        angle = (min_angle, max_angle)
+        turn_angle = (min_turn_angle, max_turn_angle)
 
         Each step has a random angle theta and random step length
         dist such that:
-        min_angle <= theta <= max_angle
+        min_turn_angle <= theta <= max_turn_angle
         and
         min_step_size <= dist <= max_step_size
         """
         self.draw_box(boxsize)
         step = 0
         while step < num_steps:
-            self.left(random.uniform(*angle))
+            self.left(random.uniform(*turn_angle))
             distance = random.uniform(*step_size)
             if self.is_move_in_box(distance, boxsize):
                 self.forward(distance)
@@ -180,3 +198,16 @@ def random_movesq_boxed(t, d, a, steps, boxsize):
         t.lt(random.choice(a))
         check_forward_and_move(t, random.uniform(d[0],d[1]), boxsize)
         i = i + 1
+
+
+
+
+def main():
+    t = TurtleWalk()
+    ts = t.turtle.screen
+    ts.delay(0)
+    t.random_walk_in_box((5, 5), (-30, 30), 1000, 150)
+    turtle.mainloop()
+
+if __name__ == '__main__':
+    main()
