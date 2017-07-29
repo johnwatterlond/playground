@@ -112,11 +112,24 @@ class my_turtle(turtle.Turtle):
         self.goto(*current_position)
         return proposed_position.is_in_box(boxsize)
 
+    def random_walk(self, step_size, angle, num_steps):
+        """
+        Turtle goes for a random walk for num_steps steps.
 
+        step_size = (min_step_size, max_step_size)
+        angle = (min_angle, max_angle)
 
-
-
-
+        Each step has a random angle theta and random step length dist
+        such that:
+        min_angle <= theta <= max_angle
+        and
+        min_step_size <= dist <= max_step_size
+        """
+        step = 0
+        while step < num_steps:
+            self.left(random.uniform(*angle))
+            self.forward(random.uniform(*step_size))
+            step = step + 1
 
 
 
