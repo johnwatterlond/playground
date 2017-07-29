@@ -181,7 +181,12 @@ class TurtleWalk(turtle.Turtle):
 
 
 
-#TODO: fix this wriggle shit.
+# TODO:
+# instead of turning around, turtle should wriggle around.
+# until it can do the move it wants?
+# should a wriggle be counted in a single step. i.e. wriggle
+# until step possible then make step, then continue on to next
+# step?
 def wriggle(t, distance, boxsize):
     out_of_bounds = True
     while out_of_bounds == True:
@@ -190,12 +195,14 @@ def wriggle(t, distance, boxsize):
 
 
 
-
-def random_movesq_boxed(t, d, a, steps, boxsize):
+# TODO:
+# instead of picking an angle from an interval,
+# pick angle from a list.
+def random_movesq_boxed(t, d, angle_list, steps, boxsize):
     i = 0
     draw_box(t, boxsize)
     while i < steps:
-        t.lt(random.choice(a))
+        t.lt(random.choice(angle_list))
         check_forward_and_move(t, random.uniform(d[0],d[1]), boxsize)
         i = i + 1
 
