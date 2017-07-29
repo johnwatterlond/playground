@@ -119,8 +119,8 @@ class my_turtle(turtle.Turtle):
         step_size = (min_step_size, max_step_size)
         angle = (min_angle, max_angle)
 
-        Each step has a random angle theta and random step length dist
-        such that:
+        Each step has a random angle theta and random step length
+        dist such that:
         min_angle <= theta <= max_angle
         and
         min_step_size <= dist <= max_step_size
@@ -132,34 +132,35 @@ class my_turtle(turtle.Turtle):
             step = step + 1
 
 
+    def random_walk_boxed(self, step_size, angle, num_steps, boxsize):
+        """
+        Turtle goes for a random walk inside box with side length
+        boxsize for num_steps steps. If turtle hits wall with next
+        step, it turns around.
 
-def random_move(t, d=(10, 10), a=(-180, 180), num_steps=1000):
-    """
-    d = (min_dist, max_dist)
-    a = (min_angle, max_angle)
-    """
-    i = 0
-    while i < num_steps:
-        t.lt(random.uniform(a[0], a[1]))
-        t.fd(random.uniform(d[0], d[1]))
-        i = i + 1
+        step_size = (min_step_size, max_step_size)
+        angle = (min_angle, max_angle)
 
-#random_move(bob, (3, 10), (-180, 180), 5000)
+        Each step has a random angle theta and random step length
+        dist such that:
+        min_angle <= theta <= max_angle
+        and
+        min_step_size <= dist <= max_step_size
+        """
+        self.draw_box(boxsize)
+        step = 0
+        while step < num_steps:
+            self.left(random.uniform(*angle))
+            distance = random.uniform(*step_size)
+            if self.is_move_in_box(distance, boxsize):
+                self.forward(distance)
+            else:
+                self.left(180)
+            step = step + 1
 
 
 
 
-
-
-
-
-def random_move_boxed(t, d, a, steps, boxsize):
-    i = 0
-    draw_box(t, boxsize)
-    while i < steps:
-        t.lt(random.uniform(a[0], a[1]))
-        check_forward_and_move(t, random.uniform(d[0],d[1]), boxsize)
-        i = i + 1
 
 
 #TODO: fix this wriggle shit.
@@ -168,13 +169,6 @@ def wriggle(t, distance, boxsize):
     while out_of_bounds == True:
         t.right(distance)
         check_forward_and_move(t, distance, boxsize)
-
-
-
-
-#random_move_boxed(bob, (4, 4), (-180, 180), 5000, 150)
-#random_move_boxed(bob, (4, 4), (-10, 10), 5000, 150)
-#random_move_boxed(bob, (4, 4), (-45, 45), 5000, 150)
 
 
 
