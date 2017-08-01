@@ -64,13 +64,13 @@ class TurtleWalk(turtle.Turtle):
         """
         return self.pos().distance(self.home) < epsilon
 
-    def goto(self, x, y):
+    def goto(self, point):
         """
         Move turtle to coordinates (x, y) without drawing any lines.
         """
         self.hideturtle()
         self.penup()
-        self.setposition(x, y)
+        self.setposition(point.x, point.y)
         self.pendown()
         self.showturtle()
 
@@ -78,7 +78,7 @@ class TurtleWalk(turtle.Turtle):
         """
         Return turtle back home without drawing lines.
         """
-        self.goto(0, 0)
+        self.goto(Point(0, 0))
 
     def silent_forward(self, distance):
         """
@@ -115,7 +115,7 @@ class TurtleWalk(turtle.Turtle):
         The size of a box is defined as the (shortest) distance
         from the center of the box to any of its sides.
         """
-        self.goto(-boxsize, -boxsize)
+        self.goto(Point(-boxsize, -boxsize))
         self.draw_square(boxsize * 2)
         self.go_home()
 
@@ -129,10 +129,10 @@ class TurtleWalk(turtle.Turtle):
         # current_position is a tuple while proposed_position is
         # a Point().  This could be confusing when reading later.
         # Fix this issue.
-        current_position = self.position()
+        current_position = self.pos()
         self.silent_forward(distance)
-        proposed_position = Point(*self.position())
-        self.goto(*current_position)
+        proposed_position = self.pos()
+        self.goto(current_position)
         return proposed_position.is_in_box(boxsize)
 
     def random_walk(self, step_size, turn_angle, num_steps):
