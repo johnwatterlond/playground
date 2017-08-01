@@ -78,7 +78,7 @@ class TurtleWalk(turtle.Turtle):
         """
         Return turtle back home without drawing lines.
         """
-        self.goto(0, 0)
+        self.goto(self.home.x, self.home.y)
 
     def silent_forward(self, distance):
         """
@@ -124,15 +124,10 @@ class TurtleWalk(turtle.Turtle):
         Return True if by going forward by distance, turtle is in
         the box of size boxsize.
         """
-
-        # TODO:
-        # current_position is a tuple while proposed_position is
-        # a Point().  This could be confusing when reading later.
-        # Fix this issue.
-        current_position = self.position()
+        current_position = self.pos()
         self.silent_forward(distance)
-        proposed_position = Point(*self.position())
-        self.goto(*current_position)
+        proposed_position = self.pos()
+        self.goto(current_position.x, current_position.y)
         return proposed_position.is_in_box(boxsize)
 
     def random_walk(self, step_size, turn_angle, num_steps):
@@ -196,14 +191,10 @@ class TurtleWalk(turtle.Turtle):
         Return True if by going forward by distance, turtle is in
         the circle centered at (0, 0) of radius radius.
         """
-
-        # TODO:
-        # DRY. this is basically verbatim copy of
-        # is_move_in_box.
-        current_position = self.position()
+        current_position = self.pos()
         self.silent_forward(distance)
-        proposed_position = Point(*self.position())
-        self.goto(*current_position)
+        proposed_position = self.pos()
+        self.goto(current_position.x, current_position.y)
         return proposed_position.is_in_circle(radius)
 
     def random_walk_in_circle(self, step_size, turn_angle, num_steps, radius):
