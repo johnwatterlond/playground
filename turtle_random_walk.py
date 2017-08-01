@@ -64,13 +64,13 @@ class TurtleWalk(turtle.Turtle):
         """
         return self.pos().distance(self.home) < epsilon
 
-    def goto(self, x, y):
+    def goto(self, point):
         """
         Move turtle to coordinates (x, y) without drawing any lines.
         """
         self.hideturtle()
         self.penup()
-        self.setposition(x, y)
+        self.setposition(point.x, point.y)
         self.pendown()
         self.showturtle()
 
@@ -78,7 +78,7 @@ class TurtleWalk(turtle.Turtle):
         """
         Return turtle back home without drawing lines.
         """
-        self.goto(self.home.x, self.home.y)
+        self.goto(Point(0, 0))
 
     def silent_forward(self, distance):
         """
@@ -115,7 +115,7 @@ class TurtleWalk(turtle.Turtle):
         The size of a box is defined as the (shortest) distance
         from the center of the box to any of its sides.
         """
-        self.goto(-boxsize, -boxsize)
+        self.goto(Point(-boxsize, -boxsize))
         self.draw_square(boxsize * 2)
         self.go_home()
 
