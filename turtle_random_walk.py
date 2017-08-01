@@ -15,14 +15,23 @@ import math
 import random
 
 
-
-#TODO:
-# make my turtle class work better with Point class.
-# when calling like t.pos() it returns a Point object.
-# I should also be able to do something like t.goto(Point)
-# i.e. pass a Point object to t.goto().
-
 class Point:
+    """
+    Represents a point in 2-dimensions.
+
+    Args:
+        x: x-coordinate of point.
+        y: y-coordinate of point.
+
+    Attributes:
+        x: x-coordinate of point.
+        y: y-coordinate of point.
+
+    methods:
+        distance(other): Distance to Point other.
+        is_in_box(boxsize): Is point in box of size boxsize.
+        is_in_circle(radius): Is point in circle of radius radius.
+    """
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -51,11 +60,42 @@ class Point:
 
 
 class TurtleWalk(turtle.Turtle):
+    """
+    Represents a turtle for random walks.
+
+    Inherits attributes and methods from turtle.Turtle. Note that
+    turtle.pos() is redefined.
+
+    Args:
+        home: Turtle's home as Point(x, y). Default is origin.
+
+    Attributes:
+        home: Turtle's home as Point(x, y).
+
+    methods:
+        pos():
+        is_home(epsilon=.001):
+        go_to(point):
+        go_home():
+        silent_forward(distance):
+        draw_polygon(side_length, num_sides):
+        draw_square(side_length, num_sides):
+        draw_box(boxsize):
+        is_move_in_box(distance, boxsize):
+        random_walk(step_size, turn_angle, num_steps):
+        random_walk_in_box(step_size, turn_angle, num_steps, boxsize):
+        draw_circle(radius):
+        is_move_in_circle(distance, radius):
+        random_walk_in_circle(self, step_size, turn_angle, num_steps, radius):
+    """
     def __init__(self, home=Point(0, 0)):
         self.home = home
         super().__init__()
 
     def pos(self):
+        """
+        Return position of turtle as a Point.
+        """
         return Point(*self.position())
 
     def is_home(self, epsilon=.001):
@@ -64,9 +104,10 @@ class TurtleWalk(turtle.Turtle):
         """
         return self.pos().distance(self.home) < epsilon
 
-    def goto(self, point):
+    def go_to(self, point):
         """
-        Move turtle to coordinates (x, y) without drawing any lines.
+        Move turtle to coordinates of Point point without drawing
+        any lines.
         """
         self.hideturtle()
         self.penup()
@@ -78,14 +119,14 @@ class TurtleWalk(turtle.Turtle):
         """
         Return turtle back home without drawing lines.
         """
-        self.goto(Point(0, 0))
+        self.go_to(Point(0, 0))
 
     def silent_forward(self, distance):
         """
         Hide turtle and move forward by distance without drawing
         any lines.
 
-        This method is meant to be followed by goto() and as such
+        This method is meant to be followed by go_to() and as such
         leaves turtle hidden and pen up.
         """
         self.hideturtle()
@@ -115,7 +156,7 @@ class TurtleWalk(turtle.Turtle):
         The size of a box is defined as the (shortest) distance
         from the center of the box to any of its sides.
         """
-        self.goto(Point(-boxsize, -boxsize))
+        self.go_to(Point(-boxsize, -boxsize))
         self.draw_square(boxsize * 2)
         self.go_home()
 
@@ -127,7 +168,7 @@ class TurtleWalk(turtle.Turtle):
         current_position = self.pos()
         self.silent_forward(distance)
         proposed_position = self.pos()
-        self.goto(current_position.x, current_position.y)
+        self.go_to(current_position)
         return proposed_position.is_in_box(boxsize)
 
     def random_walk(self, step_size, turn_angle, num_steps):
@@ -182,7 +223,7 @@ class TurtleWalk(turtle.Turtle):
 
         Returns home after circle is drawn.
         """
-        self.goto(0, -radius)
+        self.go_to(Point(0, -radius))
         self.circle(radius)
         self.go_home()
 
@@ -194,7 +235,7 @@ class TurtleWalk(turtle.Turtle):
         current_position = self.pos()
         self.silent_forward(distance)
         proposed_position = self.pos()
-        self.goto(current_position.x, current_position.y)
+        self.go_to(current_position)
         return proposed_position.is_in_circle(radius)
 
     def random_walk_in_circle(self, step_size, turn_angle, num_steps, radius):
@@ -223,19 +264,6 @@ class TurtleWalk(turtle.Turtle):
             else:
                 self.left(180)
             step = step + 1
-
-
-# TODO:
-# make names for box and draw_box similar to circle/draw_circle...
-def draw_circle(t, radius):
-    t.goto(0, -radius)
-    t.circle(radius)
-    t.go_home()
-
-
-
-
-
 
 
 # TODO:
