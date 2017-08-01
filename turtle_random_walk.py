@@ -139,7 +139,6 @@ class TurtleWalk(turtle.Turtle):
         """
         Turtle goes for a random walk for num_steps steps.
 
-
         step_size = (min_step_size, max_step_size)
         turn_angle = (min_turn_angle, max_turn_angle)
 
@@ -159,10 +158,8 @@ class TurtleWalk(turtle.Turtle):
         """
         Turtle goes for a random walk inside a box of size boxsize
         for num_steps steps.
-
         If a step causes turtle to leave box, instead of taking
         that step turtle turns around.
-
 
         step_size = (min_step_size, max_step_size)
         turn_angle = (min_turn_angle, max_turn_angle)
@@ -185,6 +182,11 @@ class TurtleWalk(turtle.Turtle):
             step = step + 1
 
     def draw_circle(self, radius):
+        """
+        Turtle draws a circle of radius radius with center (0, 0).
+
+        Returns home after circle is drawn.
+        """
         self.goto(0, -radius)
         self.circle(radius)
         self.go_home()
@@ -192,7 +194,7 @@ class TurtleWalk(turtle.Turtle):
     def is_move_in_circle(self, distance, radius):
         """
         Return True if by going forward by distance, turtle is in
-        the circle of radius radius.
+        the circle centered at (0, 0) of radius radius.
         """
 
         # TODO:
@@ -204,15 +206,12 @@ class TurtleWalk(turtle.Turtle):
         self.goto(*current_position)
         return proposed_position.is_in_circle(radius)
 
-
     def random_walk_in_circle(self, step_size, turn_angle, num_steps, radius):
         """
         Turtle goes for a random walk inside a circle of radius
         radius for num_steps steps.
-
         If a step causes turtle to leave circle, instead of taking
         that step turtle turns around.
-
 
         step_size = (min_step_size, max_step_size)
         turn_angle = (min_turn_angle, max_turn_angle)
