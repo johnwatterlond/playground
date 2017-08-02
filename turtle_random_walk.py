@@ -38,7 +38,7 @@ class Point:
 
     def distance(self, other):
         """
-        Calculate the distance between self and point other.
+        Calculate the distance between self and Point other.
         """
         dx = other.x - self.x
         dy = other.y - self.y
