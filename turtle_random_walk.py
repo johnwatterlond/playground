@@ -71,22 +71,6 @@ class TurtleWalk(turtle.Turtle):
 
     Attributes:
         home: Turtle's home as Point(x, y).
-
-    methods:
-        pos():
-        is_home(epsilon=.001):
-        go_to(point):
-        go_home():
-        silent_forward(distance):
-        draw_polygon(side_length, num_sides):
-        draw_square(side_length, num_sides):
-        draw_box(boxsize):
-        is_move_in_box(distance, boxsize):
-        random_walk(step_size, turn_angle, num_steps):
-        random_walk_in_box(step_size, turn_angle, num_steps, boxsize):
-        draw_circle(radius):
-        is_move_in_circle(distance, radius):
-        random_walk_in_circle(self, step_size, turn_angle, num_steps, radius):
     """
     def __init__(self, home=Point(0, 0)):
         self.home = home
@@ -265,18 +249,41 @@ class TurtleWalk(turtle.Turtle):
                 self.left(180)
             step = step + 1
 
+    def wriggle(self):
+        t.right(random.randint(-180, 180))
 
-# TODO:
-# instead of turning around, turtle should wriggle around.
-# until it can do the move it wants?
-# should a wriggle be counted in a single step. i.e. wriggle
-# until step possible then make step, then continue on to next
-# step?
-def wriggle(t, distance, boxsize):
-    out_of_bounds = True
-    while out_of_bounds == True:
-        t.right(distance)
-        check_forward_and_move(t, distance, boxsize)
+    def random_walk_in_box_wriggle(self, step_size, turn_angle, num_steps, boxsize):
+        """
+        Turtle goes for a random walk inside a box of size boxsize
+        for num_steps steps.
+        If a step causes turtle to leave box, instead of taking
+        that step turtle turns at a random angle and tries to go
+        forward.  It does this until it can make the move.
+
+        step_size = (min_step_size, max_step_size)
+        turn_angle = (min_turn_angle, max_turn_angle)
+
+        Each step has a random angle theta and random step length
+        dist such that:
+        min_turn_angle <= theta <= max_turn_angle
+        and
+        min_step_size <= dist <= max_step_size
+        """
+        self.draw_box(boxsize)
+        step = 0
+        while step < num_steps:
+            self.left(random.uniform(*turn_angle))
+            distance = random.uniform(*step_size)
+            if self.is_move_in_box(distance, boxsize):
+                self.forward(distance)
+            else:
+                while not self.is_move_in_box(distance, boxsize):
+                    self.wriggle()
+                self.forward(distance)
+            step = step + 1
+
+
+
 
 
 
