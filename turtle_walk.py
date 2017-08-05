@@ -241,7 +241,7 @@ def main():
     ts = t.turtle.screen
     ts.delay(0)
 
-    t.random_walk_in_shape((5,5), (-30, 30), 1000, Circle, 150)
+
     t.random_walk_in_shape((5,5), (-30, 30), 1000, Box, 150)
 
     turtle.mainloop()
