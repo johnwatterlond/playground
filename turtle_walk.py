@@ -227,20 +227,11 @@ class TurtleWalk(turtle.Turtle):
             step = step + 1
 
 
-
-
-
-
-
-
-
-
 def main():
     t = TurtleWalk()
     t.speed(0)
     ts = t.turtle.screen
     ts.delay(0)
-
 
     t.random_walk_in_shape((5,5), (-30, 30), 1000, Box, 150)
 
