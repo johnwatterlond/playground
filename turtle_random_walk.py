@@ -26,11 +26,6 @@ class Point:
     Attributes:
         x: x-coordinate of point.
         y: y-coordinate of point.
-
-    methods:
-        distance(other): Distance to Point other.
-        is_in_box(boxsize): Is point in box of size boxsize.
-        is_in_circle(radius): Is point in circle of radius radius.
     """
     def __init__(self, x, y):
         self.x = x
@@ -250,6 +245,9 @@ class TurtleWalk(turtle.Turtle):
             step = step + 1
 
     def wriggle(self):
+        """
+        Turtle turns at a random angle.
+        """
         t.right(random.randint(-180, 180))
 
     def random_walk_in_box_wriggle(self, step_size, turn_angle, num_steps, boxsize):
