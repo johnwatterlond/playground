@@ -282,7 +282,6 @@ class TurtleWalk(turtle.Turtle):
 
 
 
-testing
 
 
 # TODO:
