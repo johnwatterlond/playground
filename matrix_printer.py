@@ -1,4 +1,50 @@
+"""
+Module for printing a matrix.
 
+Matrix can be of any size and can contain numbers or words of any
+length.
+Matrix should be a list of rows where each row is a list.
+
+
+Examples:
+---------
+
+Example 1:
+In :
+matrix = [[2, 4, 6], [8, 10, 12], [14, 16, 18]]
+print_matrix(matrix)
+
+Out :
+2   4   6
+8   10  12
+14  16  18
+
+
+Example 2:
+In :
+matrix = list(zip(*[iter(range(21))]*7))
+print_matrix(matrix)
+
+Out :
+0   1   2   3   4   5   6
+7   8   9   10  11  12  13
+14  15  16  17  18  19  20
+
+
+Example 3:
+In :
+matrix = [
+    ['cat', 'meow'],
+    ['dog', 'bark'],
+    ['airplane', 'vroom']
+    ]
+print_matrix(matrix)
+
+Out :
+cat       meow
+dog       bark
+airplane  vroom
+"""
 
 
 def get_row_format(num_cols, padding):
