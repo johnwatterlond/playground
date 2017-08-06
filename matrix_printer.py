@@ -63,7 +63,8 @@ def get_row_format(num_cols, padding):
 
 def get_formatted_rows(matrix, num_cols, padding):
     """
-    Return the rows of matrix as a list of formatted rows as strings.
+    Return the rows of matrix as a list of formatted rows as
+    strings.
 
     num_cols: number of columns in the matrix.
     padding: how many characters each element in the row should
@@ -87,7 +88,7 @@ def get_matrix_string(matrix, num_cols, padding):
 
 def len_longest_in_row(row):
     """
-    Return the length of the longest element in list row.
+    Return the length of the longest element in row.
     """
     return max([len('{}'.format(x)) for x in row])
 
