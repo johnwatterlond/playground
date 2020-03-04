@@ -248,7 +248,7 @@ class TurtleWalk(turtle.Turtle):
         """
         Turtle turns at a random angle.
         """
-        t.right(random.randint(-180, 180))
+        self.right(random.randint(-180, 180))
 
     def random_walk_in_box_wriggle(self, step_size, turn_angle, num_steps, boxsize):
         """
